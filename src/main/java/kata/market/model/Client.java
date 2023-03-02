@@ -21,6 +21,11 @@ class Client {
     }
 
     void removeFromCart(Product product, Float number) {
+        if (cart.containsKey(product)) {
+            Match((Float) cart.get(product) - number).of(
+                    Case($(n -> n > 0), () -> cart.replace(product, (Float) cart.get(product) - number)),
+                    Case($(), () -> cart.remove(product)));
+        }
     }
 
 }

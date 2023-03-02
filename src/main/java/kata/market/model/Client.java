@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.util.LinkedHashMap;
 
+import static io.vavr.API.*;
+
 
 @Data
 class Client {
@@ -16,6 +18,9 @@ class Client {
         } else {
             cart.put(product, numberToBuy);
         }
+    }
+
+    void removeFromCart(Product product, Float number) {
     }
 
 }

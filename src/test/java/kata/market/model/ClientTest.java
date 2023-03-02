@@ -39,4 +39,21 @@ public class ClientTest {
         //then
         assertThat(client.getCart().toString(), is("{" + washingGel.toString() + "=2.0, " + tomato.toString() + "=1.2}"));
     }
+
+    @Test
+    public void should_remove_from_cart_when_removed() {
+        //given
+        client = new Client();
+        washingGel = new Product(false, null, "sweep", 50);
+        tomato = new Product(true, null, "potato", 5);
+        client.addToCart(tomato, 1.7f);
+        client.addToCart(washingGel, 2.0f);
+
+        //when
+        client.removeFromCart(washingGel, 2.0f);
+        client.removeFromCart(tomato, 1.2f);
+
+        //then
+        assertThat(client.getCart().toString(), is("{" + tomato.toString() + "=0.5}"));
+    }
 }

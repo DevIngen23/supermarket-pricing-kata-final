@@ -13,4 +13,8 @@ class Supermarket {
         product.setReductionValueByNumber(new Tuple2<>(numberToBuy, reduction));
     }
 
+    void removeReductions(Product product)
+    {
+    }
+
 }

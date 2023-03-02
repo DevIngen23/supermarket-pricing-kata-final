@@ -3,6 +3,7 @@ package kata.market.model;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SupermarketTest {
@@ -22,6 +23,20 @@ public class SupermarketTest {
         //then
         assertThat(product.getReductionValueByNumber()._1(), is(2));
         assertThat(product.getReductionValueByNumber()._2(), is(0.5f));
+    }
+
+    public void item_should_correctly_be_updated_when_reduction_removed() {
+        //given
+        superMarket = new Supermarket();
+
+        Product product = new Product(false, null, "washing gel", 50);
+        superMarket.addReduction(product, 2, 0.5f);
+
+        //when
+        superMarket.removeReductions(product);
+
+        //then
+        assertThat(product.getReductionValueByNumber()._1(), is(nullValue()));
     }
 
     @Test

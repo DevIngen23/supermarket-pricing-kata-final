@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class SupermarketTest {
 
     private Supermarket superMarket;
+    private Client client;
 
 
     @Test
@@ -23,20 +24,6 @@ public class SupermarketTest {
         //then
         assertThat(product.getReductionValueByNumber()._1(), is(2));
         assertThat(product.getReductionValueByNumber()._2(), is(0.5f));
-    }
-
-    public void item_should_correctly_be_updated_when_reduction_removed() {
-        //given
-        superMarket = new Supermarket();
-
-        Product product = new Product(false, null, "washing gel", 50);
-        superMarket.addReduction(product, 2, 0.5f);
-
-        //when
-        superMarket.removeReductions(product);
-
-        //then
-        assertThat(product.getReductionValueByNumber()._1(), is(nullValue()));
     }
 
     @Test
@@ -54,5 +41,39 @@ public class SupermarketTest {
         assertThat(product.getReductionValueByNumber()._2(), is(0.5f));
     }
 
+
+    @Test
+    public void item_should_correctly_be_updated_when_reduction_removed() {
+        //given
+        superMarket = new Supermarket();
+
+        Product product = new Product(false, null, "washing gel", 50);
+        superMarket.addReduction(product, 2, 0.5f);
+
+        //when
+        superMarket.removeReductions(product);
+
+        //then
+        assertThat(product.getReductionValueByNumber()._1(), is(nullValue()));
+    }
+
+    @Test
+    public void price_should_be_correct_when_calculating_total_price() {
+        //given
+        superMarket = new Supermarket();
+        client = new Client();
+        Product washingGel = new Product(false, null, "washing gel", 50);
+        Product tomato = new Product(true, null, "tomato", 5);
+        Product soap = new Product(false, null, "soap", 10);
+        client.addToCart(washingGel, 4f);
+        client.addToCart(tomato, 2.2f);
+        client.addToCart(soap, 3f);
+        superMarket.addReduction(soap, 2, 0.5f);
+
+        //when
+        superMarket.calculateTotalAmount(client);
+        //then
+        assertThat(superMarket.calculateTotalAmount(client), is(231.0f));
+    }
 
 }

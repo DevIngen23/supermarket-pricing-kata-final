@@ -8,6 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class DefaultPricing extends Pricing {
     public float calculateTotalAmount(Product product, Float number) {
-        return 0f;
+        return (product.getUnitaryPrice() * number);
     }
 }
